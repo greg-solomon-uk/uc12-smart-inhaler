@@ -1,0 +1,33 @@
+name: Smart inhaler preview deployment
+on:
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Deploy preview
+        id: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npx --yes netlify-cli@27.16.2 deploy --build --json > deploy.json
+          echo "url=$(node -e "console.log(require('./deploy.json').deploy_url)")" >> "$GITHUB_OUTPUT"
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: `Smart inhaler preview: ${{ steps.deploy.outputs.url }}`
+            })

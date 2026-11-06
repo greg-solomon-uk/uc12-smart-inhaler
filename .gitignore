@@ -1,0 +1,4 @@
+*Zone.Identifier*
+.env
+.netlify/
+node_modules/

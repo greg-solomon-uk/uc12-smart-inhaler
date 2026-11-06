@@ -1,0 +1,32 @@
+name: Smart inhaler production deployment
+on:
+  workflow_dispatch:
+    inputs:
+      release_ref:
+        description: "Approved smart-inhaler release tag"
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: smart-inhaler-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Deploy production
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx --yes netlify-cli@27.16.2 deploy --build --prod
