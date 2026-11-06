@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#0b5563">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BreathLink">
+  <title>BreathLink Assistant</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="avatar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9.5" y="2" width="5" height="8" rx="1.5"/><path d="M7 9h10v8.5a2.5 2.5 0 0 1-2.5 2.5H7z"/><path d="M7 14.5H4v4.5h3"/><circle cx="12" cy="13" r="1.2" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <div class="title">
+        <h1>BreathLink</h1>
+        <p class="status"><span class="dot"></span>Assistant &middot; approved info only</p>
+      </div>
+      <span class="badge" title="Demonstration only. Not medical advice.">Mock</span>
+    </header>
+
+    <div class="strip" role="note">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3zm0 6v5m0 3v.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Not for emergencies. Struggling to breathe? <a href="tel:999">Call 999</a></span>
+    </div>
+
+    <main id="messages" class="messages" aria-live="polite" aria-label="Conversation"></main>
+
+    <footer class="composer">
+      <div id="chips" class="chips" role="group" aria-label="Suggested replies"></div>
+      <form id="composer-form" class="input-row">
+        <label for="message" class="sr-only">Message</label>
+        <input id="message" maxlength="500" autocomplete="off" placeholder="Ask in your own words&hellip;" enterkeyhint="send">
+        <button type="submit" aria-label="Send">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12.6 2-12.6 2z" fill="currentColor"/></svg>
+        </button>
+      </form>
+      <p class="disclaimer">Demo with mock content. Not medical advice.</p>
+    </footer>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
