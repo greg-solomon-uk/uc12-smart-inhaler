@@ -23,7 +23,7 @@ jobs:
         run: |
           npx --yes netlify-cli@27.16.2 deploy --build --json > deploy.json
           echo "url=$(node -e "console.log(require('./deploy.json').deploy_url)")" >> "$GITHUB_OUTPUT"
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@v9
         with:
           script: |
             github.rest.issues.createComment({
